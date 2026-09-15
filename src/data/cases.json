@@ -1,0 +1,144 @@
+{
+  "cases": [
+    {
+      "exitCaseId": 101,
+      "caseNumber": "EC-2026-0001",
+      "status": "pre_last_day_in_progress",
+      "employeeUserId": 1,
+      "performanceManagerUserId": null,
+      "positionTitle": "Software Engineer",
+      "department": "Engineering",
+      "lastWorkingDay": "2026-10-15",
+      "resignationDate": "2026-09-01",
+      "openedAt": "2026-09-02T08:00:00.000Z",
+      "tasksSummary": {
+        "overall": { "total": 6, "completed": 2, "skipped": 0 },
+        "preLastDay": { "total": 4, "completed": 2, "skipped": 0 },
+        "lastWorkingDay": { "total": 2, "completed": 0, "skipped": 0 }
+      }
+    },
+    {
+      "exitCaseId": 102,
+      "caseNumber": "EC-2026-0002",
+      "status": "last_working_day_in_progress",
+      "employeeUserId": 6,
+      "performanceManagerUserId": null,
+      "positionTitle": "QA Analyst",
+      "department": "Engineering",
+      "lastWorkingDay": "2026-09-20",
+      "resignationDate": "2026-08-20",
+      "openedAt": "2026-08-21T08:00:00.000Z",
+      "tasksSummary": {
+        "overall": { "total": 5, "completed": 3, "skipped": 0 },
+        "preLastDay": { "total": 3, "completed": 3, "skipped": 0 },
+        "lastWorkingDay": { "total": 2, "completed": 0, "skipped": 0 }
+      }
+    }
+  ],
+  "tasks": [
+    {
+      "taskId": 1,
+      "exitCaseId": 101,
+      "taskCode": "knowledge_transfer_plan",
+      "phase": "pre_last_day",
+      "title": "Knowledge transfer plan",
+      "ownerRole": "employee",
+      "assignedUserId": 1,
+      "isRequired": true,
+      "status": "completed",
+      "sortOrder": 1,
+      "dueAt": "2026-10-01T00:00:00.000Z"
+    },
+    {
+      "taskId": 2,
+      "exitCaseId": 101,
+      "taskCode": "return_laptop",
+      "phase": "pre_last_day",
+      "title": "Schedule laptop return",
+      "ownerRole": "employee",
+      "assignedUserId": 1,
+      "isRequired": true,
+      "status": "completed",
+      "sortOrder": 2,
+      "dueAt": "2026-10-10T00:00:00.000Z"
+    },
+    {
+      "taskId": 3,
+      "exitCaseId": 101,
+      "taskCode": "exit_interview",
+      "phase": "pre_last_day",
+      "title": "Schedule exit interview",
+      "ownerRole": "ppc_people_services",
+      "assignedUserId": null,
+      "isRequired": true,
+      "status": "pending",
+      "sortOrder": 3,
+      "dueAt": "2026-10-08T00:00:00.000Z"
+    },
+    {
+      "taskId": 4,
+      "exitCaseId": 101,
+      "taskCode": "asset_check",
+      "phase": "pre_last_day",
+      "title": "IT asset damage check",
+      "ownerRole": "it",
+      "assignedUserId": 4,
+      "isRequired": true,
+      "status": "pending",
+      "sortOrder": 4,
+      "dueAt": "2026-10-12T00:00:00.000Z"
+    },
+    {
+      "taskId": 5,
+      "exitCaseId": 101,
+      "taskCode": "ad_removal",
+      "phase": "last_working_day",
+      "title": "AD account removal",
+      "ownerRole": "it",
+      "assignedUserId": 4,
+      "isRequired": true,
+      "status": "pending",
+      "sortOrder": 5,
+      "dueAt": "2026-10-15T05:00:00.000Z"
+    },
+    {
+      "taskId": 6,
+      "exitCaseId": 101,
+      "taskCode": "id_card_return",
+      "phase": "last_working_day",
+      "title": "Return ID card",
+      "ownerRole": "ops",
+      "assignedUserId": 5,
+      "isRequired": true,
+      "status": "pending",
+      "sortOrder": 6,
+      "dueAt": "2026-10-15T05:00:00.000Z"
+    },
+    {
+      "taskId": 7,
+      "exitCaseId": 102,
+      "taskCode": "settlement",
+      "phase": "last_working_day",
+      "title": "Finance settlement check",
+      "ownerRole": "finance",
+      "assignedUserId": null,
+      "isRequired": true,
+      "status": "pending",
+      "sortOrder": 1,
+      "dueAt": "2026-09-20T05:00:00.000Z"
+    },
+    {
+      "taskId": 8,
+      "exitCaseId": 102,
+      "taskCode": "final_clearance",
+      "phase": "last_working_day",
+      "title": "People Services final clearance",
+      "ownerRole": "ppc_people_services",
+      "assignedUserId": 3,
+      "isRequired": true,
+      "status": "in_progress",
+      "sortOrder": 2,
+      "dueAt": "2026-09-20T05:00:00.000Z"
+    }
+  ]
+}

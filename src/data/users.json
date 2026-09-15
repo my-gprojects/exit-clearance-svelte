@@ -1,0 +1,70 @@
+{
+  "users": [
+    {
+      "userId": 1,
+      "username": "john.doe",
+      "password": "DevPassword123!",
+      "displayName": "John Doe",
+      "email": "john.doe@example.com",
+      "department": "Engineering",
+      "employeeCode": "E1001",
+      "roles": ["employee"],
+      "isActive": true
+    },
+    {
+      "userId": 2,
+      "username": "admin.ec",
+      "password": "DevPassword123!",
+      "displayName": "Exit Admin",
+      "email": "admin.ec@example.com",
+      "department": "PPC",
+      "employeeCode": "E1002",
+      "roles": ["admin", "ppc_people_services"],
+      "isActive": true
+    },
+    {
+      "userId": 3,
+      "username": "sarah.hr",
+      "password": "DevPassword123!",
+      "displayName": "Sarah HR",
+      "email": "sarah.hr@example.com",
+      "department": "PPC",
+      "employeeCode": "E1003",
+      "roles": ["ppc_people_services"],
+      "isActive": true
+    },
+    {
+      "userId": 4,
+      "username": "mike.it",
+      "password": "DevPassword123!",
+      "displayName": "Mike IT",
+      "email": "mike.it@example.com",
+      "department": "IT",
+      "employeeCode": "E1004",
+      "roles": ["it"],
+      "isActive": true
+    },
+    {
+      "userId": 5,
+      "username": "lisa.ops",
+      "password": "DevPassword123!",
+      "displayName": "Lisa Ops",
+      "email": "lisa.ops@example.com",
+      "department": "Operations",
+      "employeeCode": "E1005",
+      "roles": ["ops"],
+      "isActive": true
+    },
+    {
+      "userId": 6,
+      "username": "david.audit",
+      "password": "DevPassword123!",
+      "displayName": "David Audit",
+      "email": "david.audit@example.com",
+      "department": "Engineering",
+      "employeeCode": "E1006",
+      "roles": ["employee"],
+      "isActive": true
+    }
+  ]
+}

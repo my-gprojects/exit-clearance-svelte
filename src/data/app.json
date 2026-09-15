@@ -1,0 +1,13 @@
+{
+  "navigation": [
+    { "id": 1, "name": "Dashboard", "url": "/dashboard", "iconClass": "home", "sortNumber": 1, "parentId": null, "isActive": true },
+    { "id": 2, "name": "Cases", "url": "/cases", "iconClass": "folder", "sortNumber": 2, "parentId": null, "isActive": true },
+    { "id": 3, "name": "Notes", "url": "/notes", "iconClass": "note", "sortNumber": 3, "parentId": null, "isActive": true },
+    { "id": 4, "name": "Admin", "url": "/admin/users", "iconClass": "settings", "sortNumber": 4, "parentId": null, "isActive": true, "adminOnly": true }
+  ],
+  "notes": [
+    { "noteId": 1, "userId": 1, "title": "Handover checklist draft", "body": "Document API ownership before LWD.", "createdAt": "2026-09-10T10:00:00.000Z" },
+    { "noteId": 2, "userId": 1, "title": "Exit interview questions", "body": "Ask about tooling friction.", "createdAt": "2026-09-11T08:30:00.000Z" },
+    { "noteId": 3, "userId": 2, "title": "Admin reminder", "body": "Review role assignments weekly.", "createdAt": "2026-09-12T09:00:00.000Z" }
+  ]
+}
