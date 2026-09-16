@@ -43,6 +43,58 @@ export function canAccessAdmin(roles: RoleCode[] | undefined): boolean {
 	return hasAnyRole(roles, ['admin']);
 }
 
+export function canAccessReports(roles: RoleCode[] | undefined): boolean {
+	return hasAnyRole(roles, ['ppc_people_services', 'admin']);
+}
+
+export function canActOnTask(
+	user: { userId: number; roles: RoleCode[] } | null | undefined,
+	task: { ownerRole: string; taskCode: string; status: string; phase: string },
+	caseMeta: {
+		employeeUserId: number;
+		performanceManagerUserId: number | null;
+		caseStatus: string;
+	}
+): boolean {
+	if (!user) return false;
+	if (task.status === 'blocked') return false;
+	if (!['pending', 'in_progress'].includes(task.status)) return false;
+	if (['fully_cleared', 'cancelled'].includes(caseMeta.caseStatus)) return false;
+
+	if (task.phase === 'pre_last_day') {
+		if (caseMeta.caseStatus !== 'pre_last_day_in_progress') return false;
+	} else if (task.phase === 'last_working_day') {
+		if (caseMeta.caseStatus !== 'last_working_day_in_progress') return false;
+	} else {
+		return false;
+	}
+
+	if (user.roles.includes('admin')) return true;
+
+	if (task.ownerRole === 'employee') {
+		if (caseMeta.employeeUserId === user.userId) return true;
+		if (
+			task.taskCode === 'knowledge_transfer_plan' &&
+			caseMeta.performanceManagerUserId === user.userId
+		) {
+			return true;
+		}
+		return false;
+	}
+
+	return user.roles.includes(task.ownerRole as RoleCode);
+}
+
+export function canRollbackTask(
+	user: { roles: RoleCode[] } | null | undefined,
+	task: { status: string },
+	caseMeta: { caseStatus: string }
+): boolean {
+	if (!user?.roles.includes('admin')) return false;
+	if (caseMeta.caseStatus === 'cancelled') return false;
+	return task.status === 'completed' || task.status === 'skipped';
+}
+
 export function statusLabel(status: string): string {
 	const map: Record<string, string> = {
 		initiated: 'Initiated',

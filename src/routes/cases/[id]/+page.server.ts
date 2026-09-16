@@ -25,7 +25,13 @@ export const load: PageServerLoad = async ({ cookies, params }) => {
 		exitCase: {
 			...exitCase,
 			employeeDisplayName: employee?.displayName ?? 'Unknown',
-			employeeEmail: employee?.email ?? ''
+			employeeEmail: employee?.email ?? '',
+			employee: {
+				userId: exitCase.employeeUserId,
+				displayName: employee?.displayName ?? 'Unknown',
+				username: employee?.username ?? '',
+				email: employee?.email ?? ''
+			}
 		},
 		tasks,
 		canManage: manage

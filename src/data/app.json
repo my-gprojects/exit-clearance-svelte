@@ -2,12 +2,178 @@
   "navigation": [
     { "id": 1, "name": "Dashboard", "url": "/dashboard", "iconClass": "home", "sortNumber": 1, "parentId": null, "isActive": true },
     { "id": 2, "name": "Cases", "url": "/cases", "iconClass": "folder", "sortNumber": 2, "parentId": null, "isActive": true },
-    { "id": 3, "name": "Notes", "url": "/notes", "iconClass": "note", "sortNumber": 3, "parentId": null, "isActive": true },
-    { "id": 4, "name": "Admin", "url": "/admin/users", "iconClass": "settings", "sortNumber": 4, "parentId": null, "isActive": true, "adminOnly": true }
+    { "id": 3, "name": "Notifications", "url": "/notifications", "iconClass": "note", "sortNumber": 3, "parentId": null, "isActive": true },
+    { "id": 4, "name": "Reports", "url": "/reports", "iconClass": "note", "sortNumber": 4, "parentId": null, "isActive": true, "reportsOnly": true },
+    { "id": 5, "name": "Notes", "url": "/notes", "iconClass": "note", "sortNumber": 5, "parentId": null, "isActive": true },
+    { "id": 6, "name": "Admin", "url": "/admin/users", "iconClass": "settings", "sortNumber": 6, "parentId": null, "isActive": true, "adminOnly": true }
   ],
   "notes": [
     { "noteId": 1, "userId": 1, "title": "Handover checklist draft", "body": "Document API ownership before LWD.", "createdAt": "2026-09-10T10:00:00.000Z" },
     { "noteId": 2, "userId": 1, "title": "Exit interview questions", "body": "Ask about tooling friction.", "createdAt": "2026-09-11T08:30:00.000Z" },
     { "noteId": 3, "userId": 2, "title": "Admin reminder", "body": "Review role assignments weekly.", "createdAt": "2026-09-12T09:00:00.000Z" }
+  ],
+  "notifications": [
+    {
+      "notificationId": 1,
+      "userId": 2,
+      "exitCaseId": 101,
+      "taskId": 3,
+      "eventType": "task_assigned",
+      "title": "Exit interview pending",
+      "body": "Schedule exit interview for John Doe.",
+      "isRead": false,
+      "createdAt": "2026-09-14T08:00:00.000Z",
+      "caseNumber": "EC-2026-0001"
+    },
+    {
+      "notificationId": 2,
+      "userId": 4,
+      "exitCaseId": 101,
+      "taskId": 4,
+      "eventType": "task_due_soon",
+      "title": "IT asset check due soon",
+      "body": "Asset damage check is due before LWD.",
+      "isRead": false,
+      "createdAt": "2026-09-15T09:00:00.000Z",
+      "caseNumber": "EC-2026-0001"
+    },
+    {
+      "notificationId": 3,
+      "userId": 1,
+      "exitCaseId": 101,
+      "taskId": null,
+      "eventType": "case_updated",
+      "title": "Your exit case is in progress",
+      "body": "Complete remaining pre-last-day tasks.",
+      "isRead": true,
+      "createdAt": "2026-09-12T10:00:00.000Z",
+      "caseNumber": "EC-2026-0001"
+    }
+  ],
+  "interviewers": [
+    {
+      "mapId": 1,
+      "positionPattern": "Software Engineer*",
+      "interviewerUserId": 3,
+      "interviewerUsername": "sarah.hr",
+      "interviewerDisplayName": "Sarah HR",
+      "interviewerEmail": "sarah.hr@example.com",
+      "isActive": true,
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    },
+    {
+      "mapId": 2,
+      "positionPattern": "QA*",
+      "interviewerUserId": 2,
+      "interviewerUsername": "admin.ec",
+      "interviewerDisplayName": "Exit Admin",
+      "interviewerEmail": "admin.ec@example.com",
+      "isActive": true,
+      "createdAt": "2026-08-01T00:00:00.000Z"
+    }
+  ],
+  "taskTemplates": [
+    {
+      "taskTemplateId": 1,
+      "taskCode": "knowledge_transfer_plan",
+      "phase": "pre_last_day",
+      "title": "Knowledge transfer plan",
+      "ownerRole": "employee",
+      "isRequired": true,
+      "sortOrder": 1,
+      "isActive": true,
+      "allowAttachments": true
+    },
+    {
+      "taskTemplateId": 2,
+      "taskCode": "return_laptop",
+      "phase": "pre_last_day",
+      "title": "Schedule laptop return",
+      "ownerRole": "employee",
+      "isRequired": true,
+      "sortOrder": 2,
+      "isActive": true,
+      "allowAttachments": false
+    },
+    {
+      "taskTemplateId": 3,
+      "taskCode": "exit_interview",
+      "phase": "pre_last_day",
+      "title": "Schedule exit interview",
+      "ownerRole": "ppc_people_services",
+      "isRequired": true,
+      "sortOrder": 3,
+      "isActive": true,
+      "allowAttachments": false
+    },
+    {
+      "taskTemplateId": 4,
+      "taskCode": "asset_check",
+      "phase": "pre_last_day",
+      "title": "IT asset damage check",
+      "ownerRole": "it",
+      "isRequired": true,
+      "sortOrder": 4,
+      "isActive": true,
+      "allowAttachments": true
+    },
+    {
+      "taskTemplateId": 5,
+      "taskCode": "ad_removal",
+      "phase": "last_working_day",
+      "title": "AD account removal",
+      "ownerRole": "it",
+      "isRequired": true,
+      "sortOrder": 5,
+      "isActive": true,
+      "allowAttachments": false
+    },
+    {
+      "taskTemplateId": 6,
+      "taskCode": "id_card_return",
+      "phase": "last_working_day",
+      "title": "Return ID card",
+      "ownerRole": "ops",
+      "isRequired": true,
+      "sortOrder": 6,
+      "isActive": true,
+      "allowAttachments": false
+    },
+    {
+      "taskTemplateId": 7,
+      "taskCode": "settlement",
+      "phase": "last_working_day",
+      "title": "Finance settlement check",
+      "ownerRole": "finance",
+      "isRequired": true,
+      "sortOrder": 7,
+      "isActive": true,
+      "allowAttachments": true
+    },
+    {
+      "taskTemplateId": 8,
+      "taskCode": "final_clearance",
+      "phase": "last_working_day",
+      "title": "People Services final clearance",
+      "ownerRole": "ppc_people_services",
+      "isRequired": true,
+      "sortOrder": 8,
+      "isActive": true,
+      "allowAttachments": false
+    }
+  ],
+  "attachments": [],
+  "audit": [
+    {
+      "auditId": 1,
+      "exitCaseId": 101,
+      "caseNumber": "EC-2026-0001",
+      "action": "task_complete",
+      "statusBefore": "pending",
+      "statusAfter": "completed",
+      "taskTitle": "Knowledge transfer plan",
+      "createdAt": "2026-09-05T10:00:00.000Z",
+      "actorDisplayName": "John Doe"
+    }
   ]
 }

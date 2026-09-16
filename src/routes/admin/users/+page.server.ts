@@ -1,7 +1,7 @@
 import { error, fail } from '@sveltejs/kit';
 import { requireUser } from '$lib/server/auth';
 import { canAccessAdmin, ALL_ROLE_CODES } from '$lib/roles';
-import { listUsers, setUserRoles, toPublicUser } from '$lib/server/db';
+import { listUsers, setUserRoles } from '$lib/server/db';
 import type { RoleCode } from '$lib/types';
 import type { Actions, PageServerLoad } from './$types';
 
@@ -11,7 +11,16 @@ export const load: PageServerLoad = async ({ cookies }) => {
 
 	return {
 		user,
-		users: listUsers().map(toPublicUser),
+		users: listUsers().map((u) => ({
+			userId: u.userId,
+			username: u.username,
+			displayName: u.displayName,
+			email: u.email,
+			department: u.department,
+			employeeCode: u.employeeCode,
+			roles: u.roles,
+			isActive: u.isActive
+		})),
 		roleCodes: ALL_ROLE_CODES
 	};
 };

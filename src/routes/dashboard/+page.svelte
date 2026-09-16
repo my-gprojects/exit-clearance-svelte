@@ -1,9 +1,18 @@
 <script lang="ts">
 	import CaseStatusBadge from '$lib/components/CaseStatusBadge.svelte';
-	import { canManageCases, progressWidthClass } from '$lib/roles';
+	import TaskActionModal from '$lib/components/TaskActionModal.svelte';
+	import { progressWidthClass } from '$lib/roles';
+	import type { QueueTask, TaskActionMode } from '$lib/types';
 
 	let { data } = $props();
-	const manage = $derived(canManageCases(data.user.roles));
+
+	let actionTask = $state<QueueTask | null>(null);
+	let actionMode = $state<TaskActionMode>('complete');
+
+	function openComplete(task: QueueTask) {
+		actionTask = task;
+		actionMode = 'complete';
+	}
 </script>
 
 <div class="space-y-4">
@@ -12,7 +21,7 @@
 		<p class="text-sm text-(--app-muted)">Welcome, {data.user.displayName}.</p>
 	</div>
 
-	{#if manage}
+	{#if data.manage}
 		<section class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
 			<a href="/cases" class="app-panel block p-4 hover:bg-(--table-row-hover-bg)">
 				<div class="text-xs text-(--app-muted)">Open cases</div>
@@ -28,7 +37,7 @@
 			</div>
 			<div class="app-panel p-4">
 				<div class="text-xs text-(--app-muted)">My queue</div>
-				<div class="mt-1 text-2xl font-semibold">{data.summary.pendingQueue}</div>
+				<div class="mt-1 text-2xl font-semibold">{data.queue.length}</div>
 			</div>
 		</section>
 	{/if}
@@ -45,11 +54,6 @@
 			<div class="min-w-32 space-y-1">
 				<div class="text-xs text-(--app-muted)">
 					{data.myCase.tasksSummary.overall.completed}/{data.myCase.tasksSummary.overall.total}
-					({Math.round(
-						(data.myCase.tasksSummary.overall.completed /
-							Math.max(data.myCase.tasksSummary.overall.total, 1)) *
-							100
-					)}%)
 				</div>
 				<div class="h-2 w-full overflow-hidden rounded bg-(--app-surface-2)">
 					<div
@@ -75,7 +79,7 @@
 	<article class="app-panel p-4">
 		<div class="mb-3 flex flex-wrap items-center justify-between gap-2">
 			<h2 class="text-base font-semibold">My action queue</h2>
-			{#if manage}
+			{#if data.manage}
 				<a href="/cases" class="text-sm font-medium text-(--focus-ring) hover:underline"
 					>All cases</a
 				>
@@ -86,23 +90,20 @@
 			<p class="text-sm text-(--app-muted)">No pending tasks for your role.</p>
 		{:else}
 			<div class="app-table-wrap -mx-4 -mb-4 border-x-0 border-b-0">
-				<table class="w-full min-w-[640px] border-collapse text-left text-sm">
+				<table class="w-full min-w-[720px] border-collapse text-left text-sm">
 					<thead class="bg-(--table-header-bg) text-(--table-header-text)">
 						<tr>
-							<th class="border-b border-(--table-header-border) px-3 py-2 font-semibold"
-								>Case</th
-							>
+							<th class="border-b border-(--table-header-border) px-3 py-2 font-semibold">Case</th>
 							<th class="border-b border-(--table-header-border) px-3 py-2 font-semibold"
 								>Employee</th
 							>
-							<th class="border-b border-(--table-header-border) px-3 py-2 font-semibold"
-								>Task</th
-							>
+							<th class="border-b border-(--table-header-border) px-3 py-2 font-semibold">Task</th>
 							<th class="border-b border-(--table-header-border) px-3 py-2 font-semibold"
 								>Status</th
 							>
+							<th class="border-b border-(--table-header-border) px-3 py-2 font-semibold">Due</th>
 							<th class="border-b border-(--table-header-border) px-3 py-2 font-semibold"
-								>Due</th
+								>Action</th
 							>
 						</tr>
 					</thead>
@@ -120,11 +121,20 @@
 								<td class="px-3 py-2">{task.title}</td>
 								<td class="px-3 py-2">
 									<span
-										class="app-chip border border-(--app-border) bg-(--app-surface-2) px-1.5 py-0.5 text-xs"
-										>{task.status}</span
+										class="app-chip border border-(--app-border) bg-(--app-surface-2) px-1.5 py-0.5 text-xs capitalize"
+										>{task.status.replaceAll('_', ' ')}</span
 									>
 								</td>
 								<td class="px-3 py-2 text-(--app-muted)">{task.dueAt?.slice(0, 10) ?? '—'}</td>
+								<td class="px-3 py-2">
+									<button
+										type="button"
+										class="btn btn-xs btn-primary"
+										onclick={() => openComplete(task)}
+									>
+										Complete
+									</button>
+								</td>
 							</tr>
 						{/each}
 					</tbody>
@@ -133,3 +143,14 @@
 		{/if}
 	</article>
 </div>
+
+{#if actionTask}
+	<TaskActionModal
+		open={true}
+		taskId={actionTask.taskId}
+		taskTitle={actionTask.title}
+		mode={actionMode}
+		allowAttachments={actionTask.allowAttachments}
+		onClose={() => (actionTask = null)}
+	/>
+{/if}

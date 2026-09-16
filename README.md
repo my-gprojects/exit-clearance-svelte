@@ -23,11 +23,9 @@ Open [http://localhost:3002](http://localhost:3002).
 
 ## Structure
 
-- `src/data/*.json` — users, cases/tasks, navigation & notes (imported into the bundle — Vercel-safe)
-- `src/lib/server/db.ts` — data access (JSON today → DB later; no `fs` reads)
-- `src/lib/server/auth.ts` — cookie session (no Windows Auth)
-- Tailwind v4 + same design tokens as the React Exit Clearance app
-- Routes: `/login`, `/dashboard`, `/cases`, `/cases/[id]`, `/notes`, `/admin/users`
+- `src/data/*.json` — users, cases/tasks, navigation, notes, notifications, interviewers, templates
+- `src/lib/server/db.ts` — in-memory JSON data access (task actions, admin, reports)
+- Routes: `/login`, `/dashboard`, `/cases`, `/cases/[id]`, `/notifications`, `/reports`, `/notes`, `/admin/users`, `/admin/exit-interviewers`, `/admin/task-templates`
 
 ## Later: SQL Server / PostgreSQL
 
