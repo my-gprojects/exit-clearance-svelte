@@ -21,20 +21,22 @@ function decodeSession(raw: string | undefined): SessionData | null {
 	}
 }
 
+const isProd = process.env.NODE_ENV === 'production';
+
 export function createSession(cookies: Cookies, user: PublicUser) {
 	const payload: SessionData = { userId: user.userId, username: user.username };
 	cookies.set(COOKIE, encodeSession(payload), {
 		path: '/',
 		httpOnly: true,
 		sameSite: 'lax',
-		secure: false,
+		secure: isProd,
 		maxAge: TTL_SEC
 	});
 	cookies.set('ec_auth_hint', '1', {
 		path: '/',
 		httpOnly: false,
 		sameSite: 'lax',
-		secure: false,
+		secure: isProd,
 		maxAge: TTL_SEC
 	});
 }

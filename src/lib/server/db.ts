@@ -1,28 +1,23 @@
 /**
- * Static JSON data access.
+ * Static JSON data access (bundled — works on Vercel serverless).
  * Swap this module later for SQL Server / PostgreSQL without changing routes.
  */
-import { readFileSync, writeFileSync } from 'node:fs';
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import usersData from '../../data/users.json';
+import casesData from '../../data/cases.json';
+import appData from '../../data/app.json';
 import type { ExitCase, ExitTask, NavItem, Note, PublicUser, RoleCode, StoredUser } from '$lib/types';
-
-const root = join(dirname(fileURLToPath(import.meta.url)), '../../data');
 
 type UsersFile = { users: StoredUser[] };
 type CasesFile = { cases: ExitCase[]; tasks: ExitTask[] };
 type AppFile = { navigation: NavItem[]; notes: Note[] };
 
-function readJson<T>(name: string): T {
-	return JSON.parse(readFileSync(join(root, name), 'utf8')) as T;
-}
-
-function writeJson(name: string, data: unknown) {
-	writeFileSync(join(root, name), JSON.stringify(data, null, 2) + '\n', 'utf8');
-}
+/** In-memory copies so admin role edits work in a single serverless invocation. */
+const usersStore: UsersFile = structuredClone(usersData as UsersFile);
+const casesStore: CasesFile = structuredClone(casesData as CasesFile);
+const appStore: AppFile = structuredClone(appData as AppFile);
 
 export function listUsers(): StoredUser[] {
-	return readJson<UsersFile>('users.json').users;
+	return usersStore.users;
 }
 
 export function findUserByUsername(username: string): StoredUser | undefined {
@@ -54,16 +49,14 @@ export function searchUsers(query: string, max = 20): PublicUser[] {
 }
 
 export function setUserRoles(userId: number, roles: RoleCode[]): PublicUser | null {
-	const file = readJson<UsersFile>('users.json');
-	const idx = file.users.findIndex((u) => u.userId === userId);
+	const idx = usersStore.users.findIndex((u) => u.userId === userId);
 	if (idx < 0) return null;
-	file.users[idx] = { ...file.users[idx], roles: [...roles] };
-	writeJson('users.json', file);
-	return toPublicUser(file.users[idx]);
+	usersStore.users[idx] = { ...usersStore.users[idx], roles: [...roles] };
+	return toPublicUser(usersStore.users[idx]);
 }
 
 export function listCases(): ExitCase[] {
-	return readJson<CasesFile>('cases.json').cases;
+	return casesStore.cases;
 }
 
 export function getCase(exitCaseId: number): ExitCase | undefined {
@@ -71,7 +64,7 @@ export function getCase(exitCaseId: number): ExitCase | undefined {
 }
 
 export function listTasks(): ExitTask[] {
-	return readJson<CasesFile>('cases.json').tasks;
+	return casesStore.tasks;
 }
 
 export function tasksForCase(exitCaseId: number): ExitTask[] {
@@ -109,15 +102,14 @@ export function queueForUser(user: PublicUser): Array<ExitTask & { caseNumber: s
 }
 
 export function navigationForUser(user: PublicUser): NavItem[] {
-	const app = readJson<AppFile>('app.json');
-	return app.navigation
+	return appStore.navigation
 		.filter((n) => n.isActive && (!n.adminOnly || user.roles.includes('admin')))
 		.sort((a, b) => a.sortNumber - b.sortNumber);
 }
 
 export function notesForUser(userId: number): Note[] {
-	return readJson<AppFile>('app.json')
-		.notes.filter((n) => n.userId === userId)
+	return appStore.notes
+		.filter((n) => n.userId === userId)
 		.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 }
 
